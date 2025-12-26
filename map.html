@@ -2,52 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Live Bus Tracking</title>
+  <title>Live Bus Tracking | Where Is My Bus?</title>
 
-  <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet/dist/leaflet.css"
-  />
-
-  <!-- Your custom styles -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <script>
-  if (!localStorage.getItem("loggedIn")) {
-    window.location.href = "login.html";
-  }
-</script>
 
+<h2>🚌 Live Bus Tracking</h2>
+<div id="map"></div>
 
-  <!-- HEADER -->
-  <h2>🚌 Live Bus Tracking Dashboard</h2>
+<div class="info-panel">
+  <h3>Live Bus Status</h3>
+  <p id="busInfo">Tracking buses...</p>
+</div>
 
-  <!-- MAP -->
-  <div id="map"></div>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="firebaseConfig.js"></script>
 
-  <!-- FLOATING LIVE INFO PANEL -->
-  <div class="info-panel" id="infoPanel">
-    <h3>Live Bus Status</h3>
-    <p id="busInfo">Tracking buses...</p>
-  </div>
-
-  <!-- ================= SCRIPTS ================= -->
-
-  <!-- Firebase v8 (NON-MODULE, STABLE) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
-  <!-- Firebase config -->
-  <script src="firebaseConfig.js"></script>
-
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-  <!-- Map logic -->
-  <script src="map.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="map.js"></script>
 
 </body>
 </html>
