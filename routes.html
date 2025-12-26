@@ -1,24 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Available Routes</title>
+  <meta charset="UTF-8">
+  <title>Available Routes | Where Is My Bus?</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <script>
-  if (!localStorage.getItem("loggedIn")) {
-    window.location.href = "login.html";
-  }
-</script>
 
+<body>
 
 <h2>Available Routes</h2>
-<div id="routes"></div>
+<div class="routes-container" id="routes"></div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 <script src="firebaseConfig.js"></script>
-<script src="routes.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const from = params.get("from");
+const to = params.get("to");
+
+firebase.database().ref("routes").once("value", snapshot => {
+  const routes = snapshot.val();
+  const routesDiv = document.getElementById("routes");
+  let found = false;
+
+  for (let routeId in routes) {
+    const route = routes[routeId];
+    const stops = route.stops;
+
+    const fromIndex = stops.indexOf(from);
+    const toIndex = stops.indexOf(to);
+
+    if (fromIndex !== -1 && toIndex !== -1 && fromIndex < toIndex) {
+      found = true;
+      routesDiv.innerHTML += `
+        <div class="route-card">
+          <h3>${route.name}</h3>
+          <p>${stops.join(" → ")}</p>
+          <button onclick="openMap('${routeId}')">Track Live</button>
+        </div>
+      `;
+    }
+  }
+
+  if (!found) {
+    routesDiv.innerHTML = "<p>No routes found</p>";
+  }
+});
+
+function openMap(routeId) {
+  window.location.href = `map.html?route=${routeId}`;
+}
+</script>
 
 </body>
 </html>
+<!-- updated -->
